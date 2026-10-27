@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import tailwindcss from "@tailwindcss/vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -22,6 +23,7 @@ const config: StorybookConfig = {
 
     return mergeConfig(config, {
       // Add dependencies to pre-optimization
+      plugins: [tailwindcss()],
       optimizeDeps: {
         include: ["storybook-dark-mode"],
       },
