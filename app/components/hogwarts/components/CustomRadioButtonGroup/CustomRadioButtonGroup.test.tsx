@@ -2,10 +2,8 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { afterEach, describe, expect, it, jest } from "@jest/globals";
-import {
-  CustomRadio,
-  CustomRadioButtonGroup,
-} from "./CustomRadioButtonGroup";
+import "@testing-library/jest-dom/jest-globals";
+import { CustomRadio, CustomRadioButtonGroup } from "./CustomRadioButtonGroup";
 
 afterEach(cleanup);
 
@@ -18,14 +16,18 @@ describe("CustomRadioButtonGroup component", () => {
       <CustomRadioButtonGroup aria-label="Choose a house">
         <CustomRadio label="Gryffindor" value="gryffindor" />
         <CustomRadio label="Ravenclaw" value="ravenclaw" />
-      </CustomRadioButtonGroup>
+      </CustomRadioButtonGroup>,
     );
 
     expect(
-      screen.getByRole("radiogroup", { name: "Choose a house" })
-    ).toBeTruthy();
-    expect(screen.getByRole("radio", { name: "Gryffindor" })).toBeTruthy();
-    expect(screen.getByRole("radio", { name: "Ravenclaw" })).toBeTruthy();
+      screen.getByRole("radiogroup", { name: "Choose a house" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("radio", { name: "Gryffindor" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("radio", { name: "Ravenclaw" }),
+    ).toBeInTheDocument();
   });
 
   it("marks the default value as selected", () => {
@@ -36,7 +38,7 @@ describe("CustomRadioButtonGroup component", () => {
       >
         <CustomRadio label="Gryffindor" value="gryffindor" />
         <CustomRadio label="Ravenclaw" value="ravenclaw" />
-      </CustomRadioButtonGroup>
+      </CustomRadioButtonGroup>,
     );
 
     expect(getRadio("Ravenclaw").checked).toBe(true);
@@ -54,7 +56,7 @@ describe("CustomRadioButtonGroup component", () => {
       >
         <CustomRadio label="Gryffindor" value="gryffindor" />
         <CustomRadio label="Ravenclaw" value="ravenclaw" />
-      </CustomRadioButtonGroup>
+      </CustomRadioButtonGroup>,
     );
 
     await user.click(screen.getByRole("radio", { name: "Gryffindor" }));
@@ -73,7 +75,7 @@ describe("CustomRadioButtonGroup component", () => {
       >
         <CustomRadio label="Gryffindor" value="gryffindor" />
         <CustomRadio label="Ravenclaw" value="ravenclaw" isDisabled />
-      </CustomRadioButtonGroup>
+      </CustomRadioButtonGroup>,
     );
 
     const disabledOption = getRadio("Ravenclaw");
@@ -92,7 +94,7 @@ describe("CustomRadioButtonGroup accessibility", () => {
       <CustomRadioButtonGroup aria-label="Choose a house">
         <CustomRadio label="Gryffindor" value="gryffindor" />
         <CustomRadio label="Ravenclaw" value="ravenclaw" />
-      </CustomRadioButtonGroup>
+      </CustomRadioButtonGroup>,
     );
 
     const results = await axe(container);
